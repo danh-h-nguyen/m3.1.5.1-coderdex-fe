@@ -1,8 +1,9 @@
 import axios from "axios";
-import { BASE_URL } from "./config";
+// import { BASE_URL } from "./config";
 
 const apiService = axios.create({
-  baseURL: BASE_URL,
+  // baseURL: BASE_URL,
+  baseURL: "http://localhost:3010",
 });
 
 apiService.interceptors.request.use(

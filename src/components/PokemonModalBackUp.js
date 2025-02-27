@@ -4,12 +4,11 @@ import Modal from "@mui/material/Modal";
 
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { alpha, Stack, Typography } from "@mui/material";
+import { alpha, Stack } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 
 import { addPokemon } from "../features/pokemons/pokemonSlice";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 
 const style = {
   position: "absolute",
@@ -40,23 +39,10 @@ export default function PokemonModal({ open, setOpen }) {
   } = methods;
   const dispatch = useDispatch();
 
-  // State lưu thông tin lỗi
-  const [errorMessage, setErrorMessage] = useState("");
-
   const onSubmit = (data) => {
     const { name, id, url, type1, type2 } = data;
-
-    // Xử lý submit và dispatch
-    dispatch(addPokemon({ name, id, imgUrl: url, types: [type1, type2] }))
-      .unwrap()
-      .then(() => {
-        setErrorMessage("");
-        navigate(`/pokemons/${id}`);
-      })
-      .catch((error) => {
-        // Lưu thông tin lỗi vào state để hiển thị dưới form
-        setErrorMessage(error.message);
-      });
+    dispatch(addPokemon({ name, id, imgUrl: url, types: [type1, type2] }));
+    navigate(`/pokemons/${id}`);
   };
 
   //   const onSubmit = (data) => {
@@ -146,13 +132,6 @@ export default function PokemonModal({ open, setOpen }) {
                   },
                 }}
               />
-
-              {/* Hiển thị thông báo lỗi nếu có */}
-              {errorMessage && (
-                <Box sx={{ mt: 2, color: "red", fontSize: "14px" }}>
-                  <Typography variant="body2">{errorMessage}</Typography>
-                </Box>
-              )}
 
               <Box
                 sx={{
